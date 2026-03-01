@@ -26,7 +26,7 @@
 
         private sealed class ElectronicsCategory : Category
         {
-            public override bool IsTaxExempt => false;
+            public override bool IsTaxExempt => true;
         }
     }
 }

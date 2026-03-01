@@ -1,4 +1,5 @@
 ﻿using SalesTaxCalculator.Models;
+using SalesTaxCalculator.Rounding;
 
 namespace SalesTaxCalculator.TaxCalculation
 {
