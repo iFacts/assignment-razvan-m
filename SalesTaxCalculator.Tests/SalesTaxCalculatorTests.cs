@@ -1,7 +1,7 @@
-﻿using System.Linq;
-using NUnit.Framework;
+﻿using NUnit.Framework;
+using SalesTaxCalculator.Models;
 
-namespace Tests
+namespace SalesTaxCalculator.Tests
 {
     [TestFixture]
     public class SalesTaxCalculatorTests
@@ -26,7 +26,7 @@ namespace Tests
         {
             var receiptDetails = SalesTaxCalculator.Process(
                 new Item("Imported box of chocolates", 10m, Category.Food, true),
-                new Item("Imported bottle of perfume", 47.50m, true));
+                new Item("Imported bottle of perfume", 47.50m, isImported: true));
             var receiptItems = receiptDetails.ReceiptItems.ToList();
             Assert.That(receiptItems[0].PriceIncludingSalesTax, Is.EqualTo(11.00m));
             Assert.That(receiptItems[1].PriceIncludingSalesTax, Is.EqualTo(59.38m));
@@ -38,10 +38,10 @@ namespace Tests
         public void ThirdExample()
         {
             var receiptDetails = SalesTaxCalculator.Process(
-                new Item("Imported bottle of perfume", 27.99m, true),
+                new Item("Imported bottle of perfume", 27.99m, isImported: true),
                 new Item("Bottle of perfume", 18.99m),
                 new Item("USB drive", 9.75m, Category.Electronics),
-                new Item("Box of imported chocolates", 11.25m, Category.Food, true));
+                new Item("Box of imported chocolates", 11.25m, Category.Food, isImported: true));
             var receiptItems = receiptDetails.ReceiptItems.ToList();
             Assert.That(receiptItems[0].PriceIncludingSalesTax, Is.EqualTo(34.99m));
             Assert.That(receiptItems[1].PriceIncludingSalesTax, Is.EqualTo(21.84m));
