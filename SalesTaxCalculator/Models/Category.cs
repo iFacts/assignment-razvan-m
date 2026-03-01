@@ -4,12 +4,12 @@
     {
         public abstract bool IsTaxExempt { get; }
 
-        public static readonly Category NotSpecified = new NotSpecifiedCateogry();
+        public static readonly Category NotSpecified = new NotSpecifiedCategory();
         public static readonly Category Magazines = new MagazinesCategory();
         public static readonly Category Food = new FoodCategory();
         public static readonly Category Electronics = new ElectronicsCategory();
 
-        private sealed class NotSpecifiedCateogry : Category
+        private sealed class NotSpecifiedCategory : Category
         {
             public override bool IsTaxExempt => false;
         }

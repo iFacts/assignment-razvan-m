@@ -6,9 +6,12 @@ namespace SalesTaxCalculator
 {
     public static class SalesTaxCalculator
     {
-        private static readonly StandardRoundingStrategy _roundingStrategy = new();
-
         public static ReceiptDetails Process(params Item[] items)
+        {
+            return Process(new StandardRoundingStrategy(), items);
+        }
+
+        public static ReceiptDetails Process(IRoundingStrategy roundingStrategy, params Item[] items)
         {
             var taxCalculator = CreateTaxCalculator();
 
@@ -21,13 +24,13 @@ namespace SalesTaxCalculator
                 var tax = taxCalculator.CalculateTax(item);
                 var priceIncludingTax = item.Price + tax;
 
-                receiptItems.Add(new ReceiptItem(item.Name, _roundingStrategy.Round(priceIncludingTax)));
+                receiptItems.Add(new ReceiptItem(item.Name, roundingStrategy.Round(priceIncludingTax)));
 
                 totalSalesTax += tax;
                 totalCost += priceIncludingTax;
             }
 
-            return new ReceiptDetails(receiptItems, _roundingStrategy.Round(totalSalesTax), _roundingStrategy.Round(totalCost));
+            return new ReceiptDetails(receiptItems, roundingStrategy.Round(totalSalesTax), roundingStrategy.Round(totalCost));
         }
 
         private static CompositeTaxCalculator CreateTaxCalculator()
