@@ -1,10 +1,18 @@
 ﻿using SalesTaxCalculator.Configuration;
 using SalesTaxCalculator.Models;
+using SalesTaxCalculator.Rounding;
 
 namespace SalesTaxCalculator.TaxCalculation
 {
     public class ImportTaxCalculator : ITaxCalculator
     {
+        private readonly IRoundingStrategy _roundingStrategy;
+
+        public ImportTaxCalculator(IRoundingStrategy roundingStrategy)
+        {
+            _roundingStrategy = roundingStrategy;
+        }
+
         public decimal CalculateTax(Item item)
         {
             if (!item.IsImported)
@@ -12,7 +20,7 @@ namespace SalesTaxCalculator.TaxCalculation
                 return 0m;
             }
 
-            return Math.Round(item.Price * TaxRates.ImportTaxRate, 2);
+            return _roundingStrategy.Round(item.Price * TaxRates.ImportTaxRate);
         }
     }
 }
