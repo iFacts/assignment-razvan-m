@@ -4,14 +4,9 @@ using SalesTaxCalculator.Rounding;
 
 namespace SalesTaxCalculator.TaxCalculation
 {
-    public class BaseSalesTaxCalculator : ITaxCalculator
+    public class BaseSalesTaxCalculator(IRoundingStrategy roundingStrategy) : ITaxCalculator
     {
-        private readonly IRoundingStrategy _roundingStrategy;
-
-        public BaseSalesTaxCalculator(IRoundingStrategy roundingStrategy)
-        {
-            _roundingStrategy = roundingStrategy;
-        }
+        private readonly IRoundingStrategy _roundingStrategy = roundingStrategy;
 
         public decimal CalculateTax(Item item)
         {
